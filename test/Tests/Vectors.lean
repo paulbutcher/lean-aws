@@ -2,7 +2,11 @@
 Copyright (c) 2026 Paul Butcher. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
+module
+
 import Aws.Sigv4
+import Codec.Hex
+import Crypto.Sha256
 
 /-!
 The published worked examples. These are examples rather than theorems deliberately: the claim
@@ -51,7 +55,7 @@ private def expectedStringToSign : String :=
       "20150830/us-east-1/service/aws4_request",
       Codec.Hex.encodeString (Crypto.Sha256.hashUtf8 expectedCanonical) ]
 
-def checks : List (String × Bool) :=
+public def checks : List (String × Bool) :=
   [ -- If the civil-date arithmetic is wrong, everything below it fails for a reason that has
     -- nothing to do with signing, so it is checked first.
     ("the example instant renders as the examples say",

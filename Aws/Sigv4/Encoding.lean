@@ -2,19 +2,22 @@
 Copyright (c) 2026 Paul Butcher. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
+module
+
+public section
 
 namespace Aws.Sigv4
 
 /-- RFC 3986 unreserved. These survive unencoded and nothing else does. -/
-def isUnreserved (b : UInt8) : Bool :=
+@[expose] def isUnreserved (b : UInt8) : Bool :=
   (0x41 ≤ b && b ≤ 0x5A) || (0x61 ≤ b && b ≤ 0x7A) || (0x30 ≤ b && b ≤ 0x39)
     || b == 0x2D || b == 0x5F || b == 0x2E || b == 0x7E
 
-private def hexDigits : List Char := "0123456789ABCDEF".toList
+@[expose] def hexDigits : List Char := "0123456789ABCDEF".toList
 
 /-- Uppercase hex, and a space as `%20` rather than `+`. Lowercase digits produce a signature that
 differs from AWS's and no useful error. -/
-def encodeByte (b : UInt8) : List Char :=
+@[expose] def encodeByte (b : UInt8) : List Char :=
   if isUnreserved b then [Char.ofNat b.toNat]
   else ['%', hexDigits.getD (b.toNat / 16) '?', hexDigits.getD (b.toNat % 16) '?']
 

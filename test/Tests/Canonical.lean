@@ -2,6 +2,8 @@
 Copyright (c) 2026 Paul Butcher. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
+module
+
 import Aws.Sigv4
 
 /-!
@@ -21,7 +23,7 @@ private def withHeaders (hs : List (String × String)) : List (String × String)
   preparedHeaders plain instant
     { method := "GET", path := "/", host := "example.amazonaws.com", headers := hs }
 
-def checks : List (String × Bool) :=
+public def checks : List (String × Bool) :=
   [ ("host and the date are always signed", signedHeaders (withHeaders []) == "host;x-amz-date"),
     ("a caller's own Host neither displaces nor duplicates the signer's",
       (withHeaders [("Host", "evil.example.com")]).filter (fun h => h.1 == "host")

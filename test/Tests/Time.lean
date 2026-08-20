@@ -2,6 +2,8 @@
 Copyright (c) 2026 Paul Butcher. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
+module
+
 import Aws.Sigv4
 
 /-!
@@ -28,7 +30,7 @@ theorem length_amzDate (t : Timestamp) : t.amzDate.length = 16 := by
 
 /-- The civil-date arithmetic, at the instants where a wrong one shows. Every expected value here
 was confirmed against an independent implementation rather than worked out by hand twice. -/
-def checks : List (String × Bool) :=
+public def checks : List (String × Bool) :=
   [ ("the epoch itself", (Timestamp.mk 0).amzDate == "19700101T000000Z"),
     ("the last second of a day", (Timestamp.mk 86399).amzDate == "19700101T235959Z"),
     -- 2000 is a leap year because it divides by 400, which is the rule a naive implementation

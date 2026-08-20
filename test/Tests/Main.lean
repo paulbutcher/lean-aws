@@ -2,14 +2,16 @@
 Copyright (c) 2026 Paul Butcher. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
-import Tests
+module
+
+public import Tests
 
 /-!
 The theorems pass by compiling. What runs here are the published vectors, and the cases whose
 expectation is a rule rather than a proof.
 -/
 
-def main : IO UInt32 := do
+public def main : IO UInt32 := do
   let checks := Tests.Suite.checks ++ Tests.Vectors.checks ++ Tests.Canonical.checks
     ++ Tests.Encoding.checks
     ++ Tests.Time.checks

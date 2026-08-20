@@ -2,6 +2,8 @@
 Copyright (c) 2026 Paul Butcher. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
+module
+
 import Aws.Sigv4
 
 /-!
@@ -34,7 +36,7 @@ theorem encodeByte_ascii :
     ∀ n ∈ List.range 256, (encodeByte (UInt8.ofNat n)).all (fun c => c.toNat < 128) = true := by
   decide
 
-def checks : List (String × Bool) :=
+public def checks : List (String × Bool) :=
   [ ("an empty path is a single slash", canonicalUri "" == "/"),
     ("a root path stays a single slash", canonicalUri "/" == "/"),
     ("a query parameter with an empty value keeps its =",

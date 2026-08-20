@@ -2,8 +2,12 @@
 Copyright (c) 2026 Paul Butcher. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
-import Aws.Sigv4.Canonical
+module
+
+public import Aws.Sigv4.Canonical
+import Codec.Hex
 import Crypto.Hmac
+import Crypto.Sha256
 
 /-!
 AWS Signature Version 4 request signing.
@@ -11,6 +15,8 @@ AWS Signature Version 4 request signing.
 Signing is a pure total function of a request, a set of credentials, and a timestamp. Nothing here
 performs IO, which is what lets a published vector fix the time and check the result.
 -/
+
+public section
 
 namespace Aws.Sigv4
 

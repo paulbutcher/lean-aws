@@ -2,6 +2,8 @@
 Copyright (c) 2026 Paul Butcher. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
+module
+
 import Aws.Sigv4
 
 /-!
@@ -422,7 +424,7 @@ private def cases : List Case :=
       authorization := "AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20150830/us-east-1/service/aws4_request, SignedHeaders=content-type;host;x-amz-date, Signature=1a72ec8f64bd914b0e42e42607c7fbce7fb2c7465f63e3092b3b0d39fa77a6fe" }
   ]
 
-def checks : List (String × Bool) :=
+public def checks : List (String × Bool) :=
   cases.flatMap fun c =>
     let signed := sign (credentialsFor c.sessionToken) scope instant c.request
     [ (s!"{c.name}: canonical request", signed.canonicalRequest == c.canonical),
