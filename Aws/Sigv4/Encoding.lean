@@ -26,18 +26,6 @@ per byte as the specification requires. -/
 def uriEncode (s : String) : String := String.ofList (s.toUTF8.toList.flatMap encodeByte)
 
 /--
-Removes dot segments and the empty segments that duplicate slashes leave, so `/example/..`, `/./`
-and `//` all sign as `/`. Every service except S3 signs the normalised path, and S3 is out of
-scope precisely because it does not.
--/
-private def normalisePath : List String → List String → List String
-  | acc, [] => acc
-  | acc, seg :: rest =>
-    if seg == "" || seg == "." then normalisePath acc rest
-    else if seg == ".." then normalisePath acc.dropLast rest
-    else normalisePath (acc ++ [seg]) rest
-
-/--
 `path` is the decoded path and is encoded once.
 
 The rule is usually stated as encoding twice, which says the same thing about a path that arrived
@@ -45,12 +33,24 @@ already encoded: a caller holding a URL has encoded it once. Taking the decoded 
 a caller can supply without having to know which of the two it is holding, and it is the form the
 published vectors are written in.
 -/
-def canonicalUri (path : String) : String :=
-  let segments := normalisePath [] (path.splitOn "/")
+@[expose] def canonicalUri (path : String) : String :=
+  let segments := normalise [] (path.splitOn "/")
   if segments.isEmpty then "/"
   else
     "/" ++ String.intercalate "/" (segments.map uriEncode)
       ++ (if path.endsWith "/" then "/" else "")
+where
+  /--
+  Removes dot segments and the empty segments that duplicate slashes leave, so `/example/..`, `/./`
+  and `//` all sign as `/`. Every service except S3 signs the normalised path, and S3 is out of
+  scope precisely because it does not.
+  -/
+  normalise : List String → List String → List String
+    | acc, [] => acc
+    | acc, seg :: rest =>
+      if seg == "" || seg == "." then normalise acc rest
+      else if seg == ".." then normalise acc.dropLast rest
+      else normalise (acc ++ [seg]) rest
 
 /-- Sorted by the encoded bytes rather than the decoded ones. `uriEncode` emits ASCII only, so
 codepoint order is byte order here. -/

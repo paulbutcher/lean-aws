@@ -10,8 +10,8 @@ import Aws.Sigv4
 Percent-encoding, which the canonical request is built out of.
 
 Hex round-tripping and lowercase output belong to `leancrypto` and are proved beside their
-definitions there. What is proved here is the part this library decides: which bytes escape, and
-that an escape is always three characters wide.
+definitions there. What is proved here is the part this library decides: which bytes escape, what
+an escape may contain, and that a canonical URI is absolute however the path normalises.
 
 `Tests.Suite` is the authority on what the encoder should produce, so what the checks below add is
 the boundaries it does not reach: a path with no segments, and a parameter with no value.
@@ -41,6 +41,13 @@ not hex, and a signature built from one is rejected with no indication of where 
 theorem encodeByte_ne_fallback :
     ∀ n ∈ List.range 256, (encodeByte (UInt8.ofNat n)).all (fun c => c != '?') = true := by
   decide
+
+/-- However a path is normalised away, what is signed is still an absolute path. A canonical
+request whose second line is empty or relative is one AWS will reject, and the rejection names the
+signature rather than the path. -/
+theorem canonicalUri_absolute (path : String) : (canonicalUri path).startsWith "/" = true := by
+  simp [canonicalUri]
+  split <;> simp
 
 public def checks : List (String × Bool) :=
   [ ("an empty path is a single slash", canonicalUri "" == "/"),
