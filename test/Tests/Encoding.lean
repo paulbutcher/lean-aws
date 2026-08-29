@@ -14,7 +14,7 @@ definitions there. What is proved here is the part this library decides: which b
 that an escape is always three characters wide.
 
 `Tests.Suite` is the authority on what the encoder should produce, so what the checks below add is
-the boundary it does not reach, where a caller supplies no path at all.
+the boundaries it does not reach: a path with no segments, and a parameter with no value.
 -/
 
 namespace Tests.Encoding
@@ -34,6 +34,12 @@ set_option maxRecDepth 8000
 already-encoded path well defined rather than a pass over arbitrary bytes. -/
 theorem encodeByte_ascii :
     ∀ n ∈ List.range 256, (encodeByte (UInt8.ofNat n)).all (fun c => c.toNat < 128) = true := by
+  decide
+
+/-- The digit lookup carries a fallback it cannot reach. Reaching it would emit a character that is
+not hex, and a signature built from one is rejected with no indication of where it went wrong. -/
+theorem encodeByte_ne_fallback :
+    ∀ n ∈ List.range 256, (encodeByte (UInt8.ofNat n)).all (fun c => c != '?') = true := by
   decide
 
 public def checks : List (String × Bool) :=

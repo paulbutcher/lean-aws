@@ -13,9 +13,7 @@ The cases are committed rather than fetched, so the suite fails when this librar
 when a network does. They were taken from the copy vendored in `mhart/aws4`, AWS having retired
 the download its own documentation still points at.
 
-Each case is checked at all three stages. A mismatch in the signature says only that something is
-wrong; a mismatch in the canonical request says where, and the canonical request and string to
-sign are text rather than a digest, so they can be read.
+Each case is checked at all three stages, which is what `Signed` carries the intermediates for.
 
 Two reductions were made in turning a raw HTTP request into the data this library takes, and both
 are recorded here rather than left to be noticed:

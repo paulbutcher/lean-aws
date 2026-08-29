@@ -7,11 +7,9 @@ module
 import Aws.Sigv4
 
 /-!
-`amzDate` is defined as `dateStamp` followed by the time, so the credential scope and the timestamp
-cannot disagree by construction; deriving them from separate clock reads is what would admit a
-signature that fails for one second a day. What construction does not give is the width of each
-field, which is what the theorems here fix: a signature is rejected just as firmly by a date of
-seven characters as by the wrong date.
+Construction already keeps the credential scope and the timestamp in step. What it does not give is
+the width of each field, which is what the theorems here fix: a signature is rejected just as
+firmly by a date of seven characters as by the wrong date.
 -/
 
 namespace Tests.Time

@@ -8,10 +8,6 @@ public section
 
 namespace Aws.Sigv4
 
-/--
-Seconds since the Unix epoch. The signer takes the time as an argument rather than reading a
-clock, which is what lets a published vector fix it.
--/
 structure Timestamp where
   epochSeconds : Nat
   deriving DecidableEq, Repr, Inhabited

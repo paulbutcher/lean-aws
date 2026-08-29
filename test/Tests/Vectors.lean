@@ -13,9 +13,8 @@ The published worked examples. These are examples rather than theorems deliberat
 being checked is agreement with a constant AWS published, which no proof about this code could
 establish.
 
-Each is checked at every intermediate stage and not at the final signature alone. A mismatch in
-the signature says only that something is wrong; a mismatch in the canonical request says where,
-and the canonical request and string to sign are text, so they can be read rather than trusted.
+Each is checked at every intermediate stage and not at the final signature alone, which is what
+`Signed` carries the intermediates for.
 -/
 
 namespace Tests.Vectors
