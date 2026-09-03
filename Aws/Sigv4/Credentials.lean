@@ -9,8 +9,9 @@ public section
 namespace Aws.Sigv4
 
 /--
-Static credentials, temporary ones included. Resolving them from the environment, the shared
-config file, or the instance metadata service is IO and is the caller's.
+Static credentials, temporary ones included. Resolving them is IO, which is the `credentials`
+subpackage: it reads the environment and the container endpoint, and refreshes temporary
+credentials before they expire.
 -/
 structure Credentials where
   accessKeyId : String

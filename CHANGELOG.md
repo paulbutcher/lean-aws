@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.3.0] - 2026-09-02
+
+* A `credentials` subpackage, which resolves credentials from the environment and from the container endpoint an ECS or Fargate task role arrives through, and refreshes temporary ones before they expire
+
 ## [0.2.1] - 2026-08-29
 
 * Proofs that a canonical URI is always absolute, and that percent-encoding never emits the fallback character its digit lookup carries
