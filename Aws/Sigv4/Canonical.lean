@@ -7,8 +7,8 @@ module
 public import Aws.Sigv4.Credentials
 public import Aws.Sigv4.Encoding
 public import Aws.Sigv4.Time
-import Codec.Hex
-import Crypto.Sha256
+import Leancrypto.Codec.Hex
+import Leancrypto.Sha2
 
 public section
 
@@ -87,7 +87,7 @@ def signedHeaders (hs : List (String × String)) : String :=
 /-- An empty body hashes as SHA-256 of the empty string, which needs no special case: it is not an
 empty hash and it is not `UNSIGNED-PAYLOAD`. -/
 def payloadHash (body : ByteArray) : String :=
-  Codec.Hex.encodeString (Crypto.Sha256.hash body)
+  Leancrypto.Codec.Hex.encodeString (Leancrypto.Sha256.hash body)
 
 def canonicalRequest (r : Request) (hs : List (String × String)) : String :=
   String.intercalate "\n"

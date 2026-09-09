@@ -5,8 +5,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 module
 
 import Aws.Sigv4
-import Codec.Hex
-import Crypto.Sha256
+import Leancrypto.Codec.Hex
+import Leancrypto.Sha2
 
 /-!
 The published worked examples. These are examples rather than theorems deliberately: the claim
@@ -52,7 +52,7 @@ private def expectedStringToSign : String :=
     [ "AWS4-HMAC-SHA256",
       "20150830T123600Z",
       "20150830/us-east-1/service/aws4_request",
-      Codec.Hex.encodeString (Crypto.Sha256.hashUtf8 expectedCanonical) ]
+      Leancrypto.Codec.Hex.encodeString (Leancrypto.Sha256.hashUtf8 expectedCanonical) ]
 
 public def checks : List (String × Bool) :=
   [ -- If the civil-date arithmetic is wrong, everything below it fails for a reason that has
@@ -75,7 +75,7 @@ public def checks : List (String × Bool) :=
     -- The documented signing key derivation, which publishes the final key of the chain. When the
     -- chain is wrong, the step it went wrong at is otherwise unrecoverable from the output.
     ("signing key derivation",
-      Codec.Hex.encodeString
+      Leancrypto.Codec.Hex.encodeString
           (signingKey exampleSecret { region := "us-east-1", service := "iam" } instant) ==
         "c4afb1cc5771d871763a393e44b703571b55cc28424d1a5e86da6ed3c154a4b9") ]
 

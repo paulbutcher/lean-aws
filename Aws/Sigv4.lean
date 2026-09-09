@@ -5,9 +5,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 module
 
 public import Aws.Sigv4.Canonical
-import Codec.Hex
-import Crypto.Hmac
-import Crypto.Sha256
+import Leancrypto.Codec.Hex
+import Leancrypto.Hmac
+import Leancrypto.Sha2
 
 /-!
 AWS Signature Version 4 request signing.
@@ -30,19 +30,20 @@ def stringToSign (scope : SigningScope) (t : Timestamp) (canonical : String) : S
     [ algorithm,
       t.amzDate,
       credentialScope scope t,
-      Codec.Hex.encodeString (Crypto.Sha256.hashUtf8 canonical) ]
+      Leancrypto.Codec.Hex.encodeString (Leancrypto.Sha256.hashUtf8 canonical) ]
 
 /-- Each step takes the previous step's raw bytes as its key, which is why the primitive has to
 return bytes rather than an encoding of them. -/
 def signingKey (secret : String) (scope : SigningScope) (t : Timestamp) : ByteArray :=
-  let kDate := Crypto.hmac ("AWS4" ++ secret).toUTF8 t.dateStamp.toUTF8
-  let kRegion := Crypto.hmac kDate scope.region.toUTF8
-  let kService := Crypto.hmac kRegion scope.service.toUTF8
-  Crypto.hmac kService "aws4_request".toUTF8
+  let kDate := Leancrypto.hmac .sha256 ("AWS4" ++ secret).toUTF8 t.dateStamp.toUTF8
+  let kRegion := Leancrypto.hmac .sha256 kDate scope.region.toUTF8
+  let kService := Leancrypto.hmac .sha256 kRegion scope.service.toUTF8
+  Leancrypto.hmac .sha256 kService "aws4_request".toUTF8
 
 def signature (secret : String) (scope : SigningScope) (t : Timestamp) (toSign : String) :
     String :=
-  Codec.Hex.encodeString (Crypto.hmac (signingKey secret scope t) toSign.toUTF8)
+  Leancrypto.Codec.Hex.encodeString
+    (Leancrypto.hmac .sha256 (signingKey secret scope t) toSign.toUTF8)
 
 /--
 What to send, and what it was computed from. The intermediates are returned because a rejected

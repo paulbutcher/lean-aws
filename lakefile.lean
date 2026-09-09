@@ -13,7 +13,7 @@ package leanaws where
     ⟨`warningAsError, true⟩]
 
 require leancrypto from git
-  "https://github.com/paulbutcher/leancrypto" @ "v0.3.1"
+  "https://github.com/paulbutcher/leancrypto" @ "v0.4.0"
 
 @[default_target]
 lean_lib Aws
