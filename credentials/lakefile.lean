@@ -16,7 +16,7 @@ require json from git
 /-- Resolution talks to the container endpoint, so this package has an HTTP client and a JSON
 parser and the package it requires has neither. -/
 package leanawsCredentials where
-  version := v!"0.3.0"
+  version := v!"0.3.1"
   leanOptions := #[
     ⟨`autoImplicit, false⟩,
     ⟨`relaxedAutoImplicit, false⟩,

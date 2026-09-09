@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.3.1] - 2026-09-09
+
+On leancrypto 0.4.0.
+
 ## [0.3.0] - 2026-09-02
 
 * A `credentials` subpackage, which resolves credentials from the environment and from the container endpoint an ECS or Fargate task role arrives through, and refreshes temporary ones before they expire

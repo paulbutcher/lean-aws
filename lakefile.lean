@@ -6,7 +6,7 @@ import Lake
 open System Lake DSL
 
 package leanaws where
-  version := v!"0.3.0"
+  version := v!"0.3.1"
   leanOptions := #[
     ⟨`autoImplicit, false⟩,
     ⟨`relaxedAutoImplicit, false⟩,
