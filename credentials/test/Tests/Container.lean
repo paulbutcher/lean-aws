@@ -10,7 +10,14 @@ namespace Tests.Container
 open Aws.Credentials Tests.Fakes
 
 /-- The check is worth nothing if it merely warns, so what is proved is that a full URI which
-passes it is the only kind that yields a request at all. -/
+passes it is the only kind that yields a request at all.
+
+The hypothesis both selects the case where `endpointUrl` has somewhere to fetch from and names the
+URL it produced, and `endpointAllowed` answers `true` to https anywhere and to plain http only at a
+loopback or link-local host, which is what the conclusion holds of that URL. The first
+argument is `none` because a relative URI is not checked; it is joined to `containerHost`, which is
+such a host. The implication is not vacuous: a permitted URI does yield `.ok`, as the checks below
+exhibit. -/
 theorem endpointUrl_full_allowed (full url : String) :
     endpointUrl none (some full) = .ok url → endpointAllowed url = true := by
   simp only [endpointUrl]

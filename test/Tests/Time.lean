@@ -15,13 +15,35 @@ firmly by a date of seven characters as by the wrong date.
 namespace Tests.Time
 open Aws.Sigv4 Aws.Sigv4.Timestamp
 
+/-- A two-digit field is two characters whatever it is given, so a month or an hour below ten is
+written `04` and not `4`. A field of the wrong width moves every field after it.
+
+Nothing restricts `n`: the string is built from two characters for every natural, so above 99,
+where the value is truncated rather than represented, the width is unchanged. -/
 theorem length_pad2 (n : Nat) : (pad2 n).length = 2 := by simp [pad2]
 
+/-- The year field is four characters, which is what fixes the width of the date stamp it opens.
+
+Again `n` ranges over every natural, and the string is built from four characters, so a year of
+five digits truncates rather than widening the field. -/
 theorem length_pad4 (n : Nat) : (pad4 n).length = 4 := by simp [pad4]
 
+/-- The date half of the credential scope is eight characters, `YYYYMMDD`. The scope is signed and
+compared as text, so an eight-character field carrying seven is refused as firmly as a wrong date.
+
+Every `Timestamp` is covered, and so every instant `civil` can be given a day count for. The four
+characters of the year and the two each of month and day come from the theorems above; only their
+sum is claimed, not that the fields are the date. -/
 theorem length_dateStamp (t : Timestamp) : t.dateStamp.length = 8 := by
   simp [Timestamp.dateStamp, length_pad2, length_pad4]
 
+/-- The `x-amz-date` header, which is also the second line of the string to sign, is sixteen
+characters, `YYYYMMDDTHHMMSSZ`. AWS reads it by position, so a field of the wrong width is read as
+part of the next one.
+
+Every `Timestamp` is covered. The eight of `dateStamp`, the `T` and the `Z`, and two characters
+each for hours, minutes and seconds come to sixteen; that they appear in that order is what the
+checks below cover. -/
 theorem length_amzDate (t : Timestamp) : t.amzDate.length = 16 := by
   simp [Timestamp.amzDate, length_pad2, length_dateStamp]
   rfl
