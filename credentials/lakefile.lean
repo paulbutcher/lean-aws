@@ -8,10 +8,10 @@ open Lake DSL
 require leanaws from ".."
 
 require leancurl from git
-  "https://github.com/paulbutcher/leancurl" @ "v0.3.1"
+  "https://github.com/paulbutcher/leancurl" @ "v0.3.2"
 
 require json from git
-  "https://github.com/paulbutcher/lean-json" @ "v0.3.0"
+  "https://github.com/paulbutcher/lean-json" @ "v0.3.1"
 
 /-- Resolution talks to the container endpoint, so this package has an HTTP client and a JSON
 parser and the package it requires has neither. -/
