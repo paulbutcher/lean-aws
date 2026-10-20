@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.3.2] - 2026-10-20
+
+Chore: bump dependencies
+
 ## [0.3.1] - 2026-09-09
 
 On leancrypto 0.4.0.
