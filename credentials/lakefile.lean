@@ -8,7 +8,7 @@ open Lake DSL
 require leanaws from ".."
 
 require leancurl from git
-  "https://github.com/paulbutcher/leancurl" @ "v0.3.2"
+  "https://github.com/paulbutcher/leancurl" @ "v0.3.3"
 
 require json from git
   "https://github.com/paulbutcher/lean-json" @ "v0.3.1"
