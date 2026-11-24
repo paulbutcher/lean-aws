@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.4.0] - 2026-11-24
+
+* Breaking: requires Lean v4.36.0; move to that toolchain
+* On json 0.4.0 and leancurl 0.3.3
+
 ## [0.3.2] - 2026-10-20
 
 Chore: bump dependencies

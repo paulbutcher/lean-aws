@@ -11,12 +11,12 @@ require leancurl from git
   "https://github.com/paulbutcher/leancurl" @ "v0.3.3"
 
 require json from git
-  "https://github.com/paulbutcher/lean-json" @ "v0.3.1"
+  "https://github.com/paulbutcher/lean-json" @ "v0.4.0"
 
 /-- Resolution talks to the container endpoint, so this package has an HTTP client and a JSON
 parser and the package it requires has neither. -/
 package leanawsCredentials where
-  version := v!"0.3.2"
+  version := v!"0.4.0"
   leanOptions := #[
     ⟨`autoImplicit, false⟩,
     ⟨`relaxedAutoImplicit, false⟩,
