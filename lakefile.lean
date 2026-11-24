@@ -6,14 +6,14 @@ import Lake
 open System Lake DSL
 
 package leanaws where
-  version := v!"0.4.0"
+  version := v!"0.4.1"
   leanOptions := #[
     ⟨`autoImplicit, false⟩,
     ⟨`relaxedAutoImplicit, false⟩,
     ⟨`warningAsError, true⟩]
 
 require leancrypto from git
-  "https://github.com/paulbutcher/leancrypto" @ "v0.4.2"
+  "https://github.com/paulbutcher/leancrypto" @ "v0.5.0"
 
 @[default_target]
 lean_lib Aws
