@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.4.1] - 2026-11-24
+
+* On leancrypto 0.5.0 and leancurl 0.4.0
+
 ## [0.4.0] - 2026-11-24
 
 * Breaking: requires Lean v4.36.0; move to that toolchain
